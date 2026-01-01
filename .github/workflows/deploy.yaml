@@ -39,7 +39,7 @@ jobs:
         run: |
           pnpm run build
         env:
-          BASE: "/genuary-2026/"
+          BASE: "/genuary2026/"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

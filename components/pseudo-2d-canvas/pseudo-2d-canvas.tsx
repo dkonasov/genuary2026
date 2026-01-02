@@ -21,6 +21,7 @@ export interface Pseudo2DCanvasProps {
 export const Pseudo2DCanvas: FC<Pseudo2DCanvasProps> = (props) => {
   const mainRef = useRef<HTMLDivElement>(null);
   const { vertexShader = baseVertexShader, fragmentShader } = props;
+  const timeRef = useRef(0);
 
   useMount(() => {
     if (mainRef.current) {
@@ -28,6 +29,8 @@ export const Pseudo2DCanvas: FC<Pseudo2DCanvasProps> = (props) => {
       const scene = new Scene();
       const camera = new OrthographicCamera(-ratio, ratio, 1, -1, 0.1, 1000);
       const planeGeometry = new PlaneGeometry(2 * ratio, 2);
+      timeRef.current = Date.now();
+
       const planeMaterial = new ShaderMaterial({
         vertexShader,
         fragmentShader,
@@ -38,6 +41,7 @@ export const Pseudo2DCanvas: FC<Pseudo2DCanvasProps> = (props) => {
               mainRef.current.clientHeight
             ),
           },
+          u_time: { value: Math.abs(Math.cos(0)) },
         },
       });
       const plane = new Mesh(planeGeometry, planeMaterial);
@@ -53,6 +57,9 @@ export const Pseudo2DCanvas: FC<Pseudo2DCanvasProps> = (props) => {
 
       const animate = () => {
         requestAnimationFrame(animate);
+        planeMaterial.uniforms.u_time.value = Math.abs(
+          Math.cos((Date.now() - timeRef.current) / 1000)
+        );
         renderer.render(scene, camera);
       };
       animate();

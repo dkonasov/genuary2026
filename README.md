@@ -1,31 +1,3 @@
-# Genuary template
+# Genuary 2026
 
-Template for Genuary challenge, powered by RSPress.
-
-## Setup
-
-Install the dependencies:
-
-```bash
-npm install
-```
-
-## Get started
-
-Start the dev server:
-
-```bash
-npm run dev
-```
-
-Build the website for production:
-
-```bash
-npm run build
-```
-
-Preview the production build locally:
-
-```bash
-npm run preview
-```
+This is repo for my Genuary 2026 site. All demos are implemented with WebGL shaders. You can explore it [here](https://konasov.space/genuary2026)

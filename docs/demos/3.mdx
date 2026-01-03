@@ -1,0 +1,10 @@
+---
+title: "Fibonacci forever"
+---
+import {Pseudo2DCanvas} from "../../components/pseudo-2d-canvas/pseudo-2d-canvas";
+import fragmentShader from "../../shaders/fibonacci-shades.glsl";
+import {fibbonaciUniforms} from "../../utils/fibonnachi-uniforms";
+
+Fifty shades of Fibonacci. Each shade has the luminosity based on its position in the Fibonacci sequence.
+
+<Pseudo2DCanvas fragmentShader={fragmentShader} customUniforms={{step: { value: fibbonaciUniforms.step}, totalSegments: { value: fibbonaciUniforms.totalSegments}, sequence: { value: fibbonaciUniforms.sequence} }} />

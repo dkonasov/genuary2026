@@ -8,6 +8,7 @@ import {
   ShaderMaterial,
   PlaneGeometry,
   Vector2,
+  ShaderMaterialParameters,
 } from "three";
 import styles from "./pseudo-2d-canvas.module.css";
 
@@ -16,11 +17,16 @@ import baseVertexShader from "../../shaders/common-vertex.glsl";
 export interface Pseudo2DCanvasProps {
   vertexShader?: string;
   fragmentShader: string;
+  customUniforms?: ShaderMaterialParameters["uniforms"];
 }
 
 export const Pseudo2DCanvas: FC<Pseudo2DCanvasProps> = (props) => {
   const mainRef = useRef<HTMLDivElement>(null);
-  const { vertexShader = baseVertexShader, fragmentShader } = props;
+  const {
+    vertexShader = baseVertexShader,
+    fragmentShader,
+    customUniforms = {},
+  } = props;
   const timeRef = useRef(0);
 
   useMount(() => {
@@ -42,6 +48,7 @@ export const Pseudo2DCanvas: FC<Pseudo2DCanvasProps> = (props) => {
             ),
           },
           u_time: { value: Math.abs(Math.cos(0)) },
+          ...customUniforms,
         },
       });
       const plane = new Mesh(planeGeometry, planeMaterial);

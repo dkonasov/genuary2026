@@ -1,11 +1,9 @@
 uniform vec2 u_resolution;
 
 void main() {
-    // gl_FragColor = vec4(vec3(float(3 / 2)), 0.0);
-    // return;
     int[7] letters = int[7](364, 488, 316, 124, 444, 441, 244);
     
-    float letterHeight = 102.0;
+    float letterHeight = 52.0;
     float segmentLength = letterHeight / 2.0;
     float lineThickness = 3.0;
     float horizontalMargin = 30.0;

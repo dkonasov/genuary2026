@@ -18,6 +18,7 @@ export interface Pseudo2DCanvasProps {
   vertexShader?: string;
   fragmentShader: string;
   customUniforms?: ShaderMaterialParameters["uniforms"];
+  onClick?: () => void;
 }
 
 export const Pseudo2DCanvas: FC<Pseudo2DCanvasProps> = (props) => {
@@ -26,8 +27,12 @@ export const Pseudo2DCanvas: FC<Pseudo2DCanvasProps> = (props) => {
     vertexShader = baseVertexShader,
     fragmentShader,
     customUniforms = {},
+    onClick,
   } = props;
   const timeRef = useRef(0);
+
+  const customUniformsRef = useRef(customUniforms);
+  customUniformsRef.current = customUniforms;
 
   useMount(() => {
     if (mainRef.current) {
@@ -67,11 +72,14 @@ export const Pseudo2DCanvas: FC<Pseudo2DCanvasProps> = (props) => {
         planeMaterial.uniforms.u_time.value = Math.abs(
           Math.cos((Date.now() - timeRef.current) / 1000)
         );
+        Object.entries(customUniformsRef.current).forEach(([key, uniform]) => {
+          planeMaterial.uniforms[key].value = uniform.value;
+        });
         renderer.render(scene, camera);
       };
       animate();
     }
   });
 
-  return <main ref={mainRef} className={styles.root}></main>;
+  return <main ref={mainRef} className={styles.root} onClick={onClick}></main>;
 };

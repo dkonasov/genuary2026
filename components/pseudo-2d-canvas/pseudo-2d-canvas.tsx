@@ -19,6 +19,7 @@ export interface Pseudo2DCanvasProps {
   fragmentShader: string;
   customUniforms?: ShaderMaterialParameters["uniforms"];
   onClick?: () => void;
+  onSizeSettled?: (width: number, height: number) => void;
 }
 
 export const Pseudo2DCanvas: FC<Pseudo2DCanvasProps> = (props) => {
@@ -28,6 +29,7 @@ export const Pseudo2DCanvas: FC<Pseudo2DCanvasProps> = (props) => {
     fragmentShader,
     customUniforms = {},
     onClick,
+    onSizeSettled,
   } = props;
   const timeRef = useRef(0);
 
@@ -36,6 +38,10 @@ export const Pseudo2DCanvas: FC<Pseudo2DCanvasProps> = (props) => {
 
   useMount(() => {
     if (mainRef.current) {
+      onSizeSettled?.(
+        mainRef.current.clientWidth,
+        mainRef.current.clientHeight
+      );
       const ratio = mainRef.current.clientWidth / mainRef.current.clientHeight;
       const scene = new Scene();
       const camera = new OrthographicCamera(-ratio, ratio, 1, -1, 0.1, 1000);

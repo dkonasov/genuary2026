@@ -24,7 +24,10 @@ void main() {
     st.x *= ratio;
 
     vec2 center = vec2(0.5 * ratio, topPoint - dist * u_time);
-    float deformationProgress = isStretching ? (u_time / squashTime) : 1.0 - ((1.0 - u_time) / (squashDuration / 2.0));
+    float deformationProgress = isStretching ? (u_time / squashTime) : 1.0 - ((1.0 - u_time - (isSquashing ? 0.0 : squashDuration / 2.0)) / (squashDuration / 2.0));
+    if (!isSquashing && !isStretching) {
+        deformationProgress = 1.0 - deformationProgress;
+    }
     deformationProgress = max(deformationProgress, 0.00000015);
 
     float deformationDelta = maxDeformationDelta * deformationProgress;
